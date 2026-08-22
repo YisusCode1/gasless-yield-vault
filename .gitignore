@@ -1,0 +1,14 @@
+# Node / Client
+node_modules/
+dist/
+.env
+
+# Python / Server
+venv/
+__pycache__/
+*.pyc
+
+# Foundry / Contracts
+out/
+cache/
+broadcast/
