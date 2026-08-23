@@ -4,14 +4,14 @@
 
 ---
 
-## 🏆 Pistas y Categorías del Hackathon 2026
+##  Pistas y Categorías del Hackathon 2026
 
 * **🟧 Patrocinador — Tether WDK (Pista 2: Construir algo sin gas / Gasless):**
   * Integración nativa del módulo oficial **`@tetherto/wdk-wallet-evm-erc-4337`** y **`@tetherto/wdk`**.
   * **Zero-to-first-deposit onboarding**: Un usuario llega con una billetera vacía (0.00 ETH, 0 USD₮), recibe USD₮ de prueba en la demo, y deposita directamente en la bóveda **sin haber comprado ETH nativo nunca**.
   * **Cotización en USD₮ pre-firma**: Se calcula y muestra la tarifa estimada en USD₮ antes de la transacción.
   * **Empaquetado atómico (Batching)**: Se agrupan `approve` y `deposit` en una sola `UserOperation` procesada por Pimlico Paymaster en Arbitrum Sepolia.
-* **🤖 Categoría General:** IA – Blockchain (Arbitrum DeFi & Smart Contracts).
+* **Categoría General:** IA – Blockchain (Arbitrum DeFi & Smart Contracts).
 
 ---
 
@@ -29,17 +29,17 @@
 
 ---
 
-## 🌐 Demo y Enlaces Oficiales
+## Demo y Enlaces Oficiales
 
-* **Frontend:** [https://arbi-agent-vault.vercel.app](https://arbi-agent-vault.vercel.app)
-* **Backend API / Agente IA:** [https://flowfi-vault.onrender.com](https://flowfi-vault.onrender.com)
+* **Frontend:** [https://]()
+* **Backend API / Agente IA:** [https://]()
 * **Contrato GasslessPilotVault en Arbitrum Sepolia:** [`0x9b24ADD6fe458f1d620A17ceC8d20944C37296d7`](https://sepolia.arbiscan.io/address/0x9b24ADD6fe458f1d620A17ceC8d20944C37296d7#code)
 * **Pimlico Bundler & Paymaster (Arbitrum Sepolia):** `https://api.pimlico.io/v2/421614/rpc?apikey=...`
 * **Video Demo (Async):** *[Enlace al video demo asíncrono]*
 
 ---
 
-## 🎯 El Problema y la Solución
+## El Problema y la Solución
 
 ### El Problema
 1. **Fricción de Gas en Onboarding:** Un usuario nuevo que tiene USD₮ pero no ETH nativo no puede interactuar con DeFi. Debe ir a un exchange, comprar ETH, pagar comisiones de retiro y enviarlo a su wallet solo para pagar centavos de gas.
@@ -55,7 +55,7 @@
 
 ---
 
-## 🏗️ Arquitectura de FlowFi
+##  Arquitectura de FlowFi
 
 ```mermaid
 flowchart TD
@@ -85,7 +85,7 @@ flowchart TD
 
 ---
 
-## 📦 Paquetes de Tether WDK Instalados
+## Paquetes de Tether WDK Instalados
 
 ```json
 {
@@ -100,7 +100,7 @@ flowchart TD
 
 ---
 
-## 🚀 Guía de Inicio Rápido (Setup desde cero)
+##  Guía de Inicio Rápido (Setup desde cero)
 
 ### Prerrequisitos
 * Node.js >= 22.18.0
