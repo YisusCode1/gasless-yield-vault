@@ -58,44 +58,29 @@
 ## Arquitectura de FlowFi
 
 ```mermaid
-graph TD
-    subgraph L1 [1. Capa de Cliente y UX]
-        A[Usuario: 0.00 ETH / USDt] --> B[WDK Gasless Service: @tetherto/wdk]
-        B --> C[Estimador de Comisiones en USDt]
-        C --> D[UserOp Builder: Batching Approve + Deposit]
+flowchart TD
+    subgraph s1["1. Experiencia de Usuario (FlowFi Frontend)"]
+        A["Usuario: 0.00 ETH - 50.00 USDt"] --> B["WDK Gasless Service: @tetherto/wdk-wallet-evm-erc-4337"]
+        B --> C["Cotizador: Estimar Tarifa en USDt"]
+        C --> D["Empaquetar UserOp: Approve USDt + Deposit FlowFiVault"]
     end
 
-    subgraph L2 [2. Infraestructura Account Abstraction ERC-4337]
-        D --> E[Pimlico Bundler RPC - Arbitrum Sepolia]
-        E --> F[Paymaster Contract - Sponsor / USDt Gas]
-        F --> G[EntryPoint v0.7 Contract]
+    subgraph s2["2. Infraestructura Tether WDK Gasless (Pista 2)"]
+        D --> E["Pimlico Bundler RPC en Arbitrum Sepolia 421614"]
+        E --> F["Paymaster Contract: Liquidacion de Gas en USDt / Patrocinio"]
+        F --> G["EntryPoint 0.7 Contract"]
     end
 
-    subgraph L3 [3. Contratos Inteligentes On-Chain]
-        G --> H[GasslessPilotVault - ERC-4626]
-        H --> I[Aave V3 Liquidity Pool]
+    subgraph s3["3. Smart Contracts On-Chain"]
+        G --> H["GasslessPilotVault.sol ERC-4626"]
+        H --> I["Aave V3 Pool: Supply / Withdraw"]
     end
 
-    subgraph L4 [4. Motor de IA y Rebalanceo Off-Chain]
-        J[Aave V3 Telemetry y Gas Monitor] --> K[Gemini LLM Decision Engine]
-        K --> L[Signer Criptografico EIP-712]
-        L -->|Ejecucion Rebalanceo| H
+    subgraph s4["4. Motor de Optimizacion IA (Backend)"]
+        J["Datos Aave V3"] --> K["Gemini LLM: Analisis de Rendimiento"]
+        K --> L["Signer EIP-712: Firma Criptografica"]
+        L --> H
     end
-## Paquetes de Tether WDK Instalados
-
-```json
-{
-  "dependencies": {
-    "@tetherto/wdk": "^1.0.0-beta.16",
-    "@tetherto/wdk-wallet-evm-erc-4337": "^1.0.0-beta.16",
-    "viem": "^2.55.19",
-    "ethers": "^6.11.1"
-  }
-}
-```
-
----
-
 ##  Guía de Inicio Rápido (Setup desde cero)
 
 ### Prerrequisitos
