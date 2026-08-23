@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import { VAULT_ADDRESS, CHAIN_ID, RPC_URL } from "../config/constants";
+import { VAULT_ADDRESS, CHAIN_ID, CHAIN_NAME, RPC_URL, BLOCK_EXPLORER } from "../config/constants";
 import vaultAbi from "../config/GasslessPilotVault.abi.json";
 
 let provider: ethers.BrowserProvider | null = null;
@@ -17,14 +17,14 @@ export async function connectWallet(): Promise<string> {
 
   const network = await provider.getNetwork();
   if (Number(network.chainId) !== CHAIN_ID) {
-    await switchToArbitrumSepolia();
+    await switchToNetwork();
   }
 
   return await signer.getAddress();
 }
 
-/** Pide a la wallet cambiar a Arbitrum Sepolia; la agrega si no la tiene */
-async function switchToArbitrumSepolia() {
+/** Pide a la wallet cambiar a la red configurada; la agrega si no la tiene */
+async function switchToNetwork() {
   const chainIdHex = "0x" + CHAIN_ID.toString(16);
   try {
     await (window as any).ethereum.request({
@@ -37,10 +37,10 @@ async function switchToArbitrumSepolia() {
         method: "wallet_addEthereumChain",
         params: [{
           chainId: chainIdHex,
-          chainName: "Arbitrum Sepolia",
+          chainName: CHAIN_NAME,
           rpcUrls: [RPC_URL],
           nativeCurrency: { name: "ETH", symbol: "ETH", decimals: 18 },
-          blockExplorerUrls: ["https://sepolia.arbiscan.io"],
+          blockExplorerUrls: [BLOCK_EXPLORER],
         }],
       });
     } else {

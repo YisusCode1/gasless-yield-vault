@@ -1,0 +1,351 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap');
+
+.vault-page {
+  --ink: #0b1220;
+  --ink-soft: #131c2b;
+  --paper: #f5f3ee;
+  --paper-dim: #e8e5dc;
+  --mint: #2dd4a7;
+  --mint-dim: #1a8f70;
+  --amber: #f0b429;
+  --rose: #f2545b;
+  --line: rgba(245, 243, 238, 0.12);
+  --line-dark: rgba(11, 18, 32, 0.14);
+
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 64px 20px;
+  background: var(--ink);
+  background-image: radial-gradient(circle at 20% 0%, rgba(45, 212, 167, 0.08), transparent 45%);
+  font-family: 'Inter', system-ui, sans-serif;
+  color: var(--paper);
+  box-sizing: border-box;
+}
+
+.vault-page *,
+.vault-page *::before,
+.vault-page *::after {
+  box-sizing: inherit;
+}
+
+.vault-card {
+  width: 100%;
+  max-width: 440px;
+}
+
+/* ---- Encabezado ---- */
+.vault-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mint);
+  margin-bottom: 10px;
+}
+
+.vault-eyebrow::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--mint);
+  box-shadow: 0 0 0 3px rgba(45, 212, 167, 0.18);
+}
+
+.vault-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 600;
+  font-size: 26px;
+  letter-spacing: -0.01em;
+  margin: 0 0 22px;
+}
+
+/* ---- Insignia "0 ETH" — elemento firma del pitch gasless ---- */
+.gas-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--mint);
+  background: rgba(45, 212, 167, 0.1);
+  border: 1px solid rgba(45, 212, 167, 0.3);
+  border-radius: 999px;
+  padding: 4px 10px 4px 8px;
+}
+
+.gas-badge svg {
+  width: 13px;
+  height: 13px;
+}
+
+/* ---- Tarjeta principal ---- */
+.vault-panel {
+  background: var(--paper);
+  color: var(--ink);
+  border-radius: 18px;
+  padding: 28px 26px 24px;
+  box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.55);
+}
+
+.vault-panel--intro {
+  text-align: left;
+}
+
+.vault-panel--intro p {
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: rgba(11, 18, 32, 0.68);
+  margin: 0 0 20px;
+}
+
+.vault-address-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.vault-address {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  color: rgba(11, 18, 32, 0.55);
+  margin: 0;
+}
+
+.vault-address strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* ---- Filas estilo "recibo": etiqueta ··· valor ---- */
+.ledger {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--line-dark);
+  border-bottom: 1px solid var(--line-dark);
+  padding: 4px 0;
+  margin-bottom: 22px;
+}
+
+.ledger-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 9px 0;
+}
+
+.ledger-row + .ledger-row {
+  border-top: 1px dashed var(--line-dark);
+}
+
+.ledger-label {
+  font-size: 13px;
+  color: rgba(11, 18, 32, 0.6);
+  white-space: nowrap;
+}
+
+.ledger-fill {
+  flex: 1;
+  border-bottom: 1px dotted rgba(11, 18, 32, 0.25);
+  transform: translateY(-3px);
+}
+
+.ledger-value {
+  font-family: 'IBM Plex Mono', monospace;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.ledger-value--accent {
+  color: var(--mint-dim);
+}
+
+/* ---- Tabs segmentados ---- */
+.mode-tabs {
+  display: flex;
+  background: var(--paper-dim);
+  border-radius: 10px;
+  padding: 3px;
+  margin-bottom: 12px;
+}
+
+.mode-tab {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-family: 'Inter', sans-serif;
+  font-size: 13.5px;
+  font-weight: 600;
+  padding: 9px 0;
+  border-radius: 8px;
+  color: rgba(11, 18, 32, 0.55);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.mode-tab.active {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.mode-tab:not(.active):hover {
+  color: var(--ink);
+}
+
+/* ---- Input tipo display ---- */
+.amount-field {
+  position: relative;
+  margin-bottom: 6px;
+}
+
+.amount-field input {
+  width: 100%;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 22px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  padding: 14px 68px 14px 14px;
+  border: 1.5px solid var(--line-dark);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.amount-field input:focus {
+  border-color: var(--mint-dim);
+}
+
+.amount-field input::placeholder {
+  color: rgba(11, 18, 32, 0.28);
+  font-weight: 400;
+}
+
+.amount-suffix {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12.5px;
+  color: rgba(11, 18, 32, 0.4);
+  pointer-events: none;
+}
+
+/* ---- Cotización previa a firmar ---- */
+.quote-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12.5px;
+  color: var(--mint-dim);
+  min-height: 18px;
+  margin: 10px 0 16px;
+}
+
+.quote-line--loading {
+  color: rgba(11, 18, 32, 0.4);
+}
+
+/* ---- Botón principal ---- */
+.vault-submit,
+.vault-connect {
+  width: 100%;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 14.5px;
+  padding: 13px 0;
+  border: none;
+  border-radius: 10px;
+  background: var(--ink);
+  color: var(--paper);
+  cursor: pointer;
+  transition: background 0.15s ease, opacity 0.15s ease;
+}
+
+.vault-submit:hover:not(:disabled),
+.vault-connect:hover:not(:disabled) {
+  background: var(--mint-dim);
+}
+
+.vault-submit:disabled {
+  background: var(--paper-dim);
+  color: rgba(11, 18, 32, 0.35);
+  cursor: not-allowed;
+}
+
+.vault-submit:focus-visible,
+.vault-connect:focus-visible,
+.mode-tab:focus-visible {
+  outline: 2px solid var(--mint-dim);
+  outline-offset: 2px;
+}
+
+/* ---- Estados ---- */
+.vault-error {
+  font-size: 13px;
+  color: var(--rose);
+  background: rgba(242, 84, 91, 0.08);
+  border: 1px solid rgba(242, 84, 91, 0.25);
+  border-radius: 8px;
+  padding: 9px 11px;
+  margin-top: 14px;
+}
+
+.vault-tx {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 13px;
+  background: rgba(45, 212, 167, 0.08);
+  border: 1px solid rgba(45, 212, 167, 0.25);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-top: 14px;
+}
+
+.vault-tx span {
+  color: rgba(11, 18, 32, 0.6);
+}
+
+.vault-tx a {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 600;
+  color: var(--mint-dim);
+  text-decoration: none;
+}
+
+.vault-tx a:hover {
+  text-decoration: underline;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vault-submit,
+  .vault-connect,
+  .mode-tab {
+    transition: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .vault-page {
+    padding: 40px 16px;
+  }
+
+  .vault-title {
+    font-size: 22px;
+  }
+}

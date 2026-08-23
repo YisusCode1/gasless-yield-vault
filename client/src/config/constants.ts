@@ -1,17 +1,20 @@
-// Configuracion de red y contratos - Arbitrum Sepolia (chain 421614)
-export const CHAIN_ID = 421614;
-export const CHAIN_NAME = "Arbitrum Sepolia";
-export const RPC_URL = "https://sepolia-rollup.arbitrum.io/rpc";
-export const BLOCK_EXPLORER = "https://sepolia.arbiscan.io";
+const CANDIDE_API_KEY = import.meta.env.VITE_CANDIDE_API_KEY as string;
 
-export const VAULT_ADDRESS = "0x9b24ADD6fe458f1d620A17ceC8d20944C37296d7";
+export const CHAIN_ID = 11155111;
+export const CHAIN_NAME = "Ethereum Sepolia";
+export const RPC_URL = "https://ethereum-sepolia-rpc.publicnode.com";
+export const BLOCK_EXPLORER = "https://sepolia.etherscan.io";
 
-export const USDC_ADDRESS = "0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d";
+export const VAULT_ADDRESS = "0x8C35A46BDD1Cb643166f88e945C0F8fDb621a15A";
+
+export const USDC_ADDRESS = "0x94a9D9AC8a22534E3FaCa9F4e7F2E2cf85d5E4C8";
 export const USDC_DECIMALS = 6;
-export const A_USDC_ADDRESS = "0x460b97BD498E1157530AEb3086301d5225b91216";
+export const A_USDC_ADDRESS = "0x16dA4541aD1807f4443d92D26044C1147406EB80";
 
-export const AAVE_POOL_ADDRESS = "0xBfC91D59fdAA134A4ED45f7B584cAf96D7792Eff";
+export const AAVE_POOL_ADDRESS = "0x6Ae43d3271ff6888e7Fc43Fd7321a503ff738951";
 
-export const PAYMASTER_TOKEN_ADDRESS = ""; // pendiente
-export const BUNDLER_URL = ""; // pendiente
-export const PAYMASTER_URL = ""; // pendiente
+export const PAYMASTER_TOKEN_ADDRESS = "0xd077A400968890Eacc75cdc901F0356c943e4fDb"; // USD₮ real (Sepolia, Candide)
+export const BUNDLER_URL = `https://api.candide.dev/api/v3/${CHAIN_ID}/${CANDIDE_API_KEY}`;
+export const PAYMASTER_URL =  BUNDLER_URL; // mismo endpoint unificado
+export const PAYMASTER_ADDRESS = "0x8b1f6cb5d062aa2ce8d581942bbb960420d875ba";
+export const ENTRY_POINT_ADDRESS = "0x0000000071727De22E5E9d8BAf0edAc6f37da032";
