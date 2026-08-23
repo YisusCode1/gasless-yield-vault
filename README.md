@@ -59,42 +59,28 @@
 
 ```mermaid
 flowchart TD
-    subgraph s1["1. Experiencia de Usuario (FlowFi Frontend)"]
+    subgraph s1 ["1. Experiencia de Usuario (FlowFi Frontend)"]
         A["Usuario: 0.00 ETH - 50.00 USDt"] --> B["WDK Gasless Service: @tetherto/wdk-wallet-evm-erc-4337"]
         B --> C["Cotizador: Estimar Tarifa en USDt"]
         C --> D["Empaquetar UserOp: Approve USDt + Deposit FlowFiVault"]
     end
 
-    subgraph s2["2. Infraestructura Tether WDK Gasless (Pista 2)"]
+    subgraph s2 ["2. Infraestructura Tether WDK Gasless (Pista 2)"]
         D --> E["Pimlico Bundler RPC en Arbitrum Sepolia 421614"]
         E --> F["Paymaster Contract: Liquidacion de Gas en USDt / Patrocinio"]
         F --> G["EntryPoint 0.7 Contract"]
     end
 
-    subgraph s3["3. Smart Contracts On-Chain"]
+    subgraph s3 ["3. Smart Contracts On-Chain"]
         G --> H["GasslessPilotVault.sol ERC-4626"]
         H --> I["Aave V3 Pool: Supply / Withdraw"]
     end
 
-    subgraph s4["4. Motor de Optimizacion IA (Backend)"]
+    subgraph s4 ["4. Motor de Optimizacion IA (Backend)"]
         J["Datos Aave V3"] --> K["Gemini LLM: Analisis de Rendimiento"]
         K --> L["Signer EIP-712: Firma Criptografica"]
         L --> H
     end
-##  Guía de Inicio Rápido (Setup desde cero)
-
-### Prerrequisitos
-* Node.js >= 22.18.0
-* Python 3.10+
-
-### 1. Clonar e Instalar Frontend
-```bash
-cd client
-npm install
-cp .env.example .env
-npm run dev
-```
-
 ### 2. Variables de Entorno del Cliente (`client/.env`)
 ```env
 VITE_PIMLICO_RPC_URL=https://api.pimlico.io/v2/421614/rpc?apikey=TU_PIMLICO_API_KEY
