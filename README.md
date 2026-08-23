@@ -56,34 +56,29 @@
 ---
 
 ## Arquitectura de FlowFi
-
-```mermaid
-flowchart TD
-    subgraph s1["1. Experiencia de Usuario (FlowFi Frontend)"]
-        A["Usuario: 0.00 ETH - 50.00 USDt"] --> B["WDK Gasless Service: @tetherto/wdk-wallet-evm-erc-4337"]
-        B --> C["Cotizador: Estimar Tarifa en USDt"]
-        C --> D["Empaquetar UserOp: Approve USDt + Deposit FlowFiVault"]
+graph TD
+    subgraph Layer1["1. Capa de Cliente & Experiencia de Usuario"]
+        A["Usuario (Saldo: 0.00 ETH / USDt)"] --> B["WDK Gasless Service (@tetherto/wdk)"]
+        B --> C["Estimador de Comisiones en USDt"]
+        C --> D["UserOp Builder (Batching: Approve + Deposit)"]
     end
 
-    subgraph s2["2. Infraestructura Tether WDK Gasless (Pista 2)"]
-        D --> E["Pimlico Bundler RPC en Arbitrum Sepolia 421614"]
-        E --> F["Paymaster Contract: Liquidacion de Gas en USDt / Patrocinio"]
-        F --> G["EntryPoint 0.7 Contract"]
+    subgraph Layer2["2. Infraestructura Account Abstraction (ERC-4337)"]
+        D --> E["Pimlico Bundler RPC (Arbitrum Sepolia)"]
+        E --> F["Paymaster Contract (Sponsor / USDt Gas)"]
+        F --> G["EntryPoint v0.7 Contract"]
     end
 
-    subgraph s3["3. Smart Contracts On-Chain"]
-        G --> H["GasslessPilotVault.sol ERC-4626"]
-        H --> I["Aave V3 Pool: Supply / Withdraw"]
+    subgraph Layer3["3. Capa de Contratos Inteligentes On-Chain"]
+        G --> H["GasslessPilotVault (ERC-4626)"]
+        H --> I["Aave V3 Liquidity Pool"]
     end
 
-    subgraph s4["4. Motor de Optimizacion IA (Backend)"]
-        J["Datos Aave V3"] --> K["Gemini LLM: Analisis de Rendimiento"]
-        K --> L["Signer EIP-712: Firma Criptografica"]
-        L --> H
+    subgraph Layer4["4. Motor de IA & Rebalanceo (Off-Chain)"]
+        J["Aave V3 Telemetry & Gas Monitor"] --> K["Gemini LLM Decision Engine"]
+        K --> L["Signer Criptografico EIP-712"]
+        L -->|Ejecucion Rebalanceo| H
     end
-```
-
----
 
 ## Paquetes de Tether WDK Instalados
 
