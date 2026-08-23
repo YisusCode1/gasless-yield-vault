@@ -1,15 +1,46 @@
-# Node / Client
+# Dependencias
+node_modules/
 client/node_modules/
+
+# Builds y Bundles
+dist/
 client/dist/
-.env
-*.env
-
-# Python / Server
-server/venv/
-server/__pycache__/
-*.pyc
-
-# Foundry / Contracts
+build/
+out/
 contracts/out/
 contracts/cache/
 contracts/broadcast/
+
+# Variables de entorno y Secretos (CRÍTICO)
+.env
+.env.*
+!.env.example
+client/.env
+client/.env.*
+!client/.env.example
+server/.env
+server/.env.*
+!server/.env.example
+contracts/.env
+contracts/.env.*
+!contracts/.env.example
+*.pem
+*.key
+*.secret
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+server/venv/
+venv/
+.venv/
+.pytest_cache/
+
+# IDEs y Logs
+.idea/
+.vscode/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

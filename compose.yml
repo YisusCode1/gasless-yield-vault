@@ -1,22 +1,32 @@
 services:
-  server:
-    build:
-      context: ./server
-      dockerfile: Dockerfile
-    ports:
-      - "8000:8000"
-    volumes:
-      - ./server:/app
-    environment:
-      - PORT=8000
+   api:
+      build:
+         context: ./server
+         dockerfile: Dockerfile
+      container_name: api
+      restart: unless-stopped
+      ports:
+         -  "8000:8000"
+      volumes:
+         -  ./server:/app
+      env_file:
+         - ./server/.env
+      environment:
+         PYTHONDONTWRITEBYTECODE: "1"
+         PYTHONUNBUFFERED: "1"
 
-  client:
-    build:
-      context: ./client
-      dockerfile: Dockerfile
-    ports:
-      - "5173:5173"
-    volumes:
-      - ./client:/app
-    depends_on:
-      - server
+   client:
+      build:
+         context: ./client
+         dockerfile: Dockerfile
+      container_name: client
+      restart: unless-stopped
+      stdin_open: true
+      tty: true
+      ports:
+         - "5173:5173"
+      volumes:
+         - ./client:/app
+         - /app/node_modules
+      depends_on:
+         - api
