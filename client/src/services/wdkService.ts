@@ -16,6 +16,8 @@ import {
   VAULT_ADDRESS,
 } from '../config/constants'
 
+console.log('BUNDLER_URL:', BUNDLER_URL)
+
 const SAFE_MODULES_VERSION = '0.3.0' // única versión soportada en beta.15
 const SEED_STORAGE_KEY = 'gasless_vault_demo_seed'
 
@@ -93,7 +95,7 @@ export function initWallet(seedPhrase: string): WalletManagerEvmErc4337 {
     paymasterAddress: PAYMASTER_ADDRESS,
     paymasterToken: { address: PAYMASTER_TOKEN_ADDRESS },
     // Tope de seguridad: aborta si el fee excede 1 USD₮ (6 decimales)
-    transactionMaxFee: 1_000000,
+    transactionMaxFee: 10_000000,
   })
   return walletManager
 }
@@ -207,6 +209,24 @@ export async function quoteDepositGasless(
     { to: USDC_ADDRESS, value: 0n, data: approveData },
     { to: VAULT_ADDRESS, value: 0n, data: depositData },
   ])
+}
+
+export async function testSingleApprove(amountInUsdcUnits: bigint, index = 0) {
+  const acc = await getAccount(index)
+  const erc20Iface = new ethers.Interface(ERC20_APPROVE_ABI)
+  const approveData = erc20Iface.encodeFunctionData('approve', [VAULT_ADDRESS, amountInUsdcUnits])
+  return acc.sendTransaction({ to: USDC_ADDRESS, value: 0n, data: approveData })
+}
+
+export async function testSingleDeposit(
+  amountInUsdcUnits: bigint,
+  index = 0
+): Promise<{ hash: string; fee: bigint }> {
+  const acc = await getAccount(index)
+  const owner = await acc.getAddress()
+  const vaultIface = new ethers.Interface(VAULT_DEPOSIT_ABI)
+  const depositData = vaultIface.encodeFunctionData('deposit', [amountInUsdcUnits, owner])
+  return acc.sendTransaction({ to: VAULT_ADDRESS, value: 0n, data: depositData })
 }
 
 // ---------------------------------------------------------------------------

@@ -112,6 +112,7 @@ export function useVault() {
       setState((s) => ({ ...s, lastTxHash: hash }));
       await refresh();
     } catch (err: any) {
+      console.error("DEPOSIT ERROR:", err);
       setState((s) => ({ ...s, loading: false, error: err.message }));
       throw err;
     }
