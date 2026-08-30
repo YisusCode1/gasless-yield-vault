@@ -1,18 +1,30 @@
-Gasless Yield Vault
+# Gasless Yield Vault
 
-🇪🇸 Español | 🇬🇧 English
+🇪🇸 [Español](#español) | 🇬🇧 [English](#english)
 
-Español
+---
 
-Onboarding sin gas para DeFi. El usuario llega con una wallet vacía —sin ETH, sin haber usado nunca una blockchain— y en dos pasos tiene fondos generando rendimiento en Aave V3. El gas de cada transacción se paga en USD₮, no en ETH.
+## Español
 
-Construido para WDK Pista 2 — Onboarding sin gas (gasless), sobre Ethereum Sepolia, usando @tetherto/wdk-wallet-evm-erc-4337 con el paymaster de Candide.
+**Onboarding sin gas para DeFi.** El usuario llega con una wallet vacía —sin ETH,
+sin haber usado nunca una blockchain— y en dos pasos tiene fondos generando
+rendimiento en Aave V3. El gas de cada transacción se paga en **USD₮**, no en ETH.
 
-El problema que resuelve
+> Construido para **WDK Pista 2 — Onboarding sin gas (gasless)**, sobre Ethereum
+> Sepolia, usando `@tetherto/wdk-wallet-evm-erc-4337` con el paymaster de Candide.
 
-La mayor barrera de entrada a DeFi no es entender qué es un vault o un yield farming — es conseguir ETH antes de poder hacer absolutamente nada. Un usuario nuevo necesita comprar ETH en un exchange, retirarlo a su wallet, y recién ahí puede pagar el gas de su primera transacción. Este proyecto elimina ese paso: la wallet del usuario nunca necesita ETH, porque el gas se paga automáticamente en el mismo stablecoin que está depositando.
+### El problema que resuelve
 
-Cómo funciona
+La mayor barrera de entrada a DeFi no es entender qué es un vault o un yield
+farming — es conseguir ETH antes de poder hacer absolutamente nada. Un usuario
+nuevo necesita comprar ETH en un exchange, retirarlo a su wallet, y recién ahí
+puede pagar el gas de su primera transacción. Este proyecto elimina ese paso:
+la wallet del usuario nunca necesita ETH, porque el gas se paga automáticamente
+en el mismo stablecoin que está depositando.
+
+### Cómo funciona
+
+```
 ┌──────────────────────┐
 │ 1. Usuario llega      │   Sin wallet previa, sin ETH, sin extensión de
 │    sin ETH             │   navegador instalada.
@@ -53,7 +65,11 @@ Cómo funciona
 │    flujo sin gas          │  fee en USD₮, se firma la UserOperation, Aave
 │                            │  libera la liquidez necesaria.
 └──────────────────────┘
-Arquitectura
+```
+
+### Arquitectura
+
+```
 gasless-yield-vault/
 ├── client/                          Frontend — React + Vite + TypeScript
 │   └── src/
@@ -84,38 +100,53 @@ gasless-yield-vault/
 │
 ├── docs/                            Documentación técnica adicional
 └── compose.yml                      Orquestación local con Docker
-Por qué esta arquitectura y no otra
+```
 
-Durante el desarrollo se evaluaron dos integraciones gasless en paralelo (una sobre Ethereum Sepolia + paymaster de Candide, otra sobre Arbitrum Sepolia + Pimlico). Se optó por la primera porque:
+#### Por qué esta arquitectura y no otra
 
-El vault y el activo mock ya estaban desplegados y verificados en Ethereum Sepolia.
-Se confirmó on-chain que el paymaster de Candide soporta USD₮ como gas token en esa red (pm_supportedERC20Tokens).
-La integración con Pimlico dependía de una API key sin configurar y no tenía transacciones reales verificadas — solo un fallback que simulaba hashes.
-Contratos desplegados (Ethereum Sepolia)
-Contrato	Dirección
-GasslessPilotVault (ERC-4626)	0x8C35A46BDD1Cb643166f88e945C0F8fDb621a15A
-MockUSDT (activo del vault, 6 decimales)	0x94a9D9AC8a22534E3FaCa9F4e7F2E2cf85d5E4C8
-Aave V3 Pool	0x6Ae43d3271ff6888e7Fc43Fd7321a503ff738951
-aToken (posición en Aave)	0x16dA4541aD1807f4443d92D26044C1147406EB80
-USD₮ de prueba (gas token, Candide)	0xd077A400968890Eacc75cdc901F0356c943e4fDb
-EntryPoint (ERC-4337 v0.7)	0x0000000071727De22E5E9d8BAf0edAc6f37da032
-Stack técnico
-Smart account: @tetherto/wdk-wallet-evm-erc-4337 (Safe Modules 0.3.0)
-Bundler / Paymaster: Candide (api.candide.dev)
-Contratos: Solidity, Foundry, OpenZeppelin, integración con Aave V3
-Frontend: React + Vite + TypeScript, ethers.js
-Backend: Python / FastAPI
-Cómo correrlo localmente
-Contratos
-bash
+Durante el desarrollo se evaluaron dos integraciones gasless en paralelo (una
+sobre Ethereum Sepolia + paymaster de **Candide**, otra sobre Arbitrum Sepolia +
+**Pimlico**). Se optó por la primera porque:
+
+- El vault y el activo mock ya estaban desplegados y verificados en Ethereum Sepolia.
+- Se confirmó on-chain que el paymaster de Candide soporta USD₮ como gas token
+  en esa red (`pm_supportedERC20Tokens`).
+- La integración con Pimlico dependía de una API key sin configurar y no tenía
+  transacciones reales verificadas — solo un fallback que simulaba hashes.
+
+### Contratos desplegados (Ethereum Sepolia)
+
+| Contrato | Dirección |
+|---|---|
+| `GasslessPilotVault` (ERC-4626) | `0x8C35A46BDD1Cb643166f88e945C0F8fDb621a15A` |
+| `MockUSDT` (activo del vault, 6 decimales) | `0x94a9D9AC8a22534E3FaCa9F4e7F2E2cf85d5E4C8` |
+| Aave V3 Pool | `0x6Ae43d3271ff6888e7Fc43Fd7321a503ff738951` |
+| aToken (posición en Aave) | `0x16dA4541aD1807f4443d92D26044C1147406EB80` |
+| USD₮ de prueba (gas token, Candide) | `0xd077A400968890Eacc75cdc901F0356c943e4fDb` |
+| EntryPoint (ERC-4337 v0.7) | `0x0000000071727De22E5E9d8BAf0edAc6f37da032` |
+
+### Stack técnico
+
+- **Smart account**: `@tetherto/wdk-wallet-evm-erc-4337` (Safe Modules 0.3.0)
+- **Bundler / Paymaster**: Candide (`api.candide.dev`)
+- **Contratos**: Solidity, Foundry, OpenZeppelin, integración con Aave V3
+- **Frontend**: React + Vite + TypeScript, `ethers.js`
+- **Backend**: Python / FastAPI
+
+### Cómo correrlo localmente
+
+#### Contratos
+
+```bash
 cd contracts
 forge install
 forge build
 forge test
+```
 
-Variables necesarias en contracts/.env (no se sube al repo):
+Variables necesarias en `contracts/.env` (no se sube al repo):
 
-dotenv
+```dotenv
 PRIVATE_KEY=
 ETHEREUM_SEPOLIA_RPC_URL=
 ASSET_ADDRESS=
@@ -123,42 +154,68 @@ TREASURY_ADDRESS=
 AAVE_POOL_ADDRESS=
 ATOKEN_ADDRESS=
 CANDIDE_API_KEY=
-Frontend
-bash
+```
+
+#### Frontend
+
+```bash
 cd client
 npm install
 npm run dev
+```
 
-Variables necesarias en client/.env (con prefijo VITE_ para que Vite las exponga):
+Variables necesarias en `client/.env` (con prefijo `VITE_` para que Vite las exponga):
 
-dotenv
+```dotenv
 VITE_CANDIDE_API_KEY=
-Backend (opcional)
-bash
+```
+
+#### Backend (opcional)
+
+```bash
 cd server
 python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 uvicorn app.main:app --reload
-Roadmap / pendientes
- Confirmar que las shares del vault (decimals()) coinciden con el activo subyacente en cualquier despliegue nuevo
- Migrar BUNDLER_URL/PAYMASTER_URL al endpoint autenticado de Candide para producción (mejor rate limit que el endpoint público)
- Integrar el layout completo (navegación, otras vistas) alrededor de VaultView
-Equipo
+```
+
+### Roadmap / pendientes
+
+- [ ] Confirmar que las shares del vault (`decimals()`) coinciden con el activo
+      subyacente en cualquier despliegue nuevo
+- [ ] Migrar `BUNDLER_URL`/`PAYMASTER_URL` al endpoint autenticado de Candide
+      para producción (mejor rate limit que el endpoint público)
+- [ ] Integrar el layout completo (navegación, otras vistas) alrededor de
+      `VaultView`
+
+### Equipo
 
 Hackathon WDK — Pista 2 (Onboarding sin gas).
 
-English
+---
 
-Gasless onboarding for DeFi. The user arrives with an empty wallet — no ETH, never having touched a blockchain before — and within two steps has funds earning yield on Aave V3. Gas for every transaction is paid in USD₮, not ETH.
+## English
 
-Built for WDK Track 2 — Gasless Onboarding, on Ethereum Sepolia, using @tetherto/wdk-wallet-evm-erc-4337 with the Candide paymaster.
+**Gasless onboarding for DeFi.** The user arrives with an empty wallet — no ETH,
+never having touched a blockchain before — and within two steps has funds
+earning yield on Aave V3. Gas for every transaction is paid in **USD₮**, not ETH.
 
-The problem it solves
+> Built for **WDK Track 2 — Gasless Onboarding**, on Ethereum Sepolia, using
+> `@tetherto/wdk-wallet-evm-erc-4337` with the Candide paymaster.
 
-The biggest barrier to entering DeFi isn't understanding what a vault or yield farming is — it's getting hold of ETH before you can do anything at all. A new user has to buy ETH on an exchange, withdraw it to their wallet, and only then can they pay gas for their first transaction. This project removes that step entirely: the user's wallet never needs ETH, because gas is automatically paid in the same stablecoin they're depositing.
+### The problem it solves
 
-How it works
+The biggest barrier to entering DeFi isn't understanding what a vault or yield
+farming is — it's getting hold of ETH before you can do anything at all. A new
+user has to buy ETH on an exchange, withdraw it to their wallet, and only then
+can they pay gas for their first transaction. This project removes that step
+entirely: the user's wallet never needs ETH, because gas is automatically paid
+in the same stablecoin they're depositing.
+
+### How it works
+
+```
 ┌──────────────────────┐
 │ 1. User arrives        │   No prior wallet, no ETH, no browser extension
 │    with no ETH          │   installed.
@@ -199,7 +256,11 @@ How it works
 │    gasless flow            │  USD₮, UserOperation signed, Aave releases the
 │                             │  needed liquidity.
 └──────────────────────┘
-Architecture
+```
+
+### Architecture
+
+```
 gasless-yield-vault/
 ├── client/                          Frontend — React + Vite + TypeScript
 │   └── src/
@@ -231,38 +292,53 @@ gasless-yield-vault/
 │
 ├── docs/                            Additional technical documentation
 └── compose.yml                      Local orchestration with Docker
-Why this architecture and not another
+```
 
-During development, two gasless integrations were evaluated in parallel (one on Ethereum Sepolia + the Candide paymaster, another on Arbitrum Sepolia + Pimlico). The first was chosen because:
+#### Why this architecture and not another
 
-The vault and mock asset were already deployed and verified on Ethereum Sepolia.
-It was confirmed on-chain that Candide's paymaster supports USD₮ as a gas token on that network (pm_supportedERC20Tokens).
-The Pimlico integration depended on an unconfigured API key and had no verified real transactions — only a fallback that simulated hashes.
-Deployed contracts (Ethereum Sepolia)
-Contract	Address
-GasslessPilotVault (ERC-4626)	0x8C35A46BDD1Cb643166f88e945C0F8fDb621a15A
-MockUSDT (vault asset, 6 decimals)	0x94a9D9AC8a22534E3FaCa9F4e7F2E2cf85d5E4C8
-Aave V3 Pool	0x6Ae43d3271ff6888e7Fc43Fd7321a503ff738951
-aToken (Aave position)	0x16dA4541aD1807f4443d92D26044C1147406EB80
-Test USD₮ (gas token, Candide)	0xd077A400968890Eacc75cdc901F0356c943e4fDb
-EntryPoint (ERC-4337 v0.7)	0x0000000071727De22E5E9d8BAf0edAc6f37da032
-Tech stack
-Smart account: @tetherto/wdk-wallet-evm-erc-4337 (Safe Modules 0.3.0)
-Bundler / Paymaster: Candide (api.candide.dev)
-Contracts: Solidity, Foundry, OpenZeppelin, Aave V3 integration
-Frontend: React + Vite + TypeScript, ethers.js
-Backend: Python / FastAPI
-Running it locally
-Contracts
-bash
+During development, two gasless integrations were evaluated in parallel (one
+on Ethereum Sepolia + the **Candide** paymaster, another on Arbitrum Sepolia +
+**Pimlico**). The first was chosen because:
+
+- The vault and mock asset were already deployed and verified on Ethereum Sepolia.
+- It was confirmed on-chain that Candide's paymaster supports USD₮ as a gas
+  token on that network (`pm_supportedERC20Tokens`).
+- The Pimlico integration depended on an unconfigured API key and had no
+  verified real transactions — only a fallback that simulated hashes.
+
+### Deployed contracts (Ethereum Sepolia)
+
+| Contract | Address |
+|---|---|
+| `GasslessPilotVault` (ERC-4626) | `0x8C35A46BDD1Cb643166f88e945C0F8fDb621a15A` |
+| `MockUSDT` (vault asset, 6 decimals) | `0x94a9D9AC8a22534E3FaCa9F4e7F2E2cf85d5E4C8` |
+| Aave V3 Pool | `0x6Ae43d3271ff6888e7Fc43Fd7321a503ff738951` |
+| aToken (Aave position) | `0x16dA4541aD1807f4443d92D26044C1147406EB80` |
+| Test USD₮ (gas token, Candide) | `0xd077A400968890Eacc75cdc901F0356c943e4fDb` |
+| EntryPoint (ERC-4337 v0.7) | `0x0000000071727De22E5E9d8BAf0edAc6f37da032` |
+
+### Tech stack
+
+- **Smart account**: `@tetherto/wdk-wallet-evm-erc-4337` (Safe Modules 0.3.0)
+- **Bundler / Paymaster**: Candide (`api.candide.dev`)
+- **Contracts**: Solidity, Foundry, OpenZeppelin, Aave V3 integration
+- **Frontend**: React + Vite + TypeScript, `ethers.js`
+- **Backend**: Python / FastAPI
+
+### Running it locally
+
+#### Contracts
+
+```bash
 cd contracts
 forge install
 forge build
 forge test
+```
 
-Required variables in contracts/.env (not committed to the repo):
+Required variables in `contracts/.env` (not committed to the repo):
 
-dotenv
+```dotenv
 PRIVATE_KEY=
 ETHEREUM_SEPOLIA_RPC_URL=
 ASSET_ADDRESS=
@@ -270,27 +346,40 @@ TREASURY_ADDRESS=
 AAVE_POOL_ADDRESS=
 ATOKEN_ADDRESS=
 CANDIDE_API_KEY=
-Frontend
-bash
+```
+
+#### Frontend
+
+```bash
 cd client
 npm install
 npm run dev
+```
 
-Required variables in client/.env (with the VITE_ prefix so Vite exposes them):
+Required variables in `client/.env` (with the `VITE_` prefix so Vite exposes them):
 
-dotenv
+```dotenv
 VITE_CANDIDE_API_KEY=
-Backend (optional)
-bash
+```
+
+#### Backend (optional)
+
+```bash
 cd server
 python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 uvicorn app.main:app --reload
-Roadmap / TODO
- Confirm the vault's share decimals() match the underlying asset on any new deployment
- Migrate BUNDLER_URL/PAYMASTER_URL to Candide's authenticated endpoint for production (better rate limits than the public endpoint)
- Integrate the full layout (navigation, other views) around VaultView
-Team
+```
+
+### Roadmap / TODO
+
+- [ ] Confirm the vault's share `decimals()` match the underlying asset on
+      any new deployment
+- [ ] Migrate `BUNDLER_URL`/`PAYMASTER_URL` to Candide's authenticated
+      endpoint for production (better rate limits than the public endpoint)
+- [ ] Integrate the full layout (navigation, other views) around `VaultView`
+
+### Team
 
 WDK Hackathon — Track 2 (Gasless Onboarding).
