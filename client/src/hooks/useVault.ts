@@ -12,7 +12,7 @@ import {
   sendVaultCall,
   resetDemoWallet,
 } from "../services/wdkService";
-import { USDC_ADDRESS, USDC_DECIMALS, VAULT_ADDRESS, RPC_URL, PAYMASTER_TOKEN_ADDRESS } from "../config/constants";
+import { USDC_ADDRESS, USDC_DECIMALS, VAULT_ADDRESS, RPC_URL } from "../config/constants";
 
 const VAULT_READ_ABI = [
   "function balanceOf(address account) view returns (uint256)",
