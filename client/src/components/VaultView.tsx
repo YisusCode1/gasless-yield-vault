@@ -17,6 +17,23 @@ function GasBadge() {
   );
 }
 
+function CopyIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <rect x="9" y="9" width="12" height="12" rx="2" strokeLinecap="round" />
+      <path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function CheckIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M20 6L9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 export default function VaultView() {
   const {
     address,
@@ -38,6 +55,7 @@ export default function VaultView() {
   const [mode, setMode] = useState<"deposit" | "withdraw">("deposit");
   const [quote, setQuote] = useState<string | null>(null);
   const [quoteLoading, setQuoteLoading] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     // Si ya hay una wallet conectada previamente, podrias auto-reconectar aqui
@@ -88,6 +106,17 @@ export default function VaultView() {
     }
   };
 
+  const handleCopyAddress = async () => {
+    if (!address) return;
+    try {
+      await navigator.clipboard.writeText(address);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1800);
+    } catch {
+      // clipboard puede fallar en contextos no-https o sin permiso; sin acción visual si falla
+    }
+  };
+
   if (!address) {
     return (
       <div className="vault-page">
@@ -123,6 +152,15 @@ export default function VaultView() {
           <div className="vault-address-row">
             <p className="vault-address">
               Cuenta <strong>{address.slice(0, 6)}...{address.slice(-4)}</strong>
+              <button
+                type="button"
+                className="copy-address-btn"
+                onClick={handleCopyAddress}
+                aria-label="Copiar dirección completa"
+                title="Copiar dirección completa"
+              >
+                {copied ? <CheckIcon /> : <CopyIcon />}
+              </button>
             </p>
             <GasBadge />
           </div>

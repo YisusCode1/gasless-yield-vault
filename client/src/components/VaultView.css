@@ -125,6 +125,38 @@
   font-weight: 600;
 }
 
+.copy-address-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  margin-left: 6px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: rgba(11, 18, 32, 0.4);
+  cursor: pointer;
+  border-radius: 5px;
+  vertical-align: middle;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.copy-address-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+.copy-address-btn:hover {
+  background: var(--paper-dim);
+  color: var(--ink);
+}
+
+.copy-address-btn:focus-visible {
+  outline: 2px solid var(--mint-dim);
+  outline-offset: 1px;
+}
+
 /* ---- Filas estilo "recibo": etiqueta ··· valor ---- */
 .ledger {
   display: flex;
