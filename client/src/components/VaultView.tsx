@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { useVault } from "../hooks/useVault";
-import { BLOCK_EXPLORER } from "../config/constants";
+import { BLOCK_EXPLORER, CHAIN_NAME } from "../config/constants";
 import "./VaultView.css";
+
+const GITHUB_REPO_URL = "https://github.com/YisusCode1/gasless-yield-vault";
 
 function GasBadge() {
   return (
@@ -31,6 +33,92 @@ function CheckIcon() {
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
       <path d="M20 6L9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
+  );
+}
+
+function NoGasIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
+      <path d="M3 22h11" strokeLinecap="round" />
+      <path d="M9 22V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v18" strokeLinecap="round" />
+      <path d="M15 8h2a2 2 0 0 1 2 2v6a1.5 1.5 0 0 0 3 0V9.5L19 6" strokeLinecap="round" />
+      <path d="M2 2l20 20" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function SignatureIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
+      <path d="M3 17c2-3 3.5-5 5-5s2 2 3 4 2 3 3 1 2-6 3-6 1.5 3 4 3" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M3 21h18" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function YieldIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
+      <path d="M3 17l5-5 4 3 6-7" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M15 8h4v4" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function GithubIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 .5C5.73.5.5 5.73.5 12c0 5.09 3.29 9.4 7.86 10.93.58.1.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.47.11-3.06 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.77.11 3.06.74.8 1.19 1.83 1.19 3.09 0 4.43-2.7 5.4-5.27 5.69.41.36.78 1.08.78 2.17 0 1.57-.01 2.83-.01 3.22 0 .31.21.67.8.56A10.51 10.51 0 0 0 23.5 12c0-6.27-5.23-11.5-11.5-11.5Z" />
+    </svg>
+  );
+}
+
+function IntroFeatures() {
+  return (
+    <div className="feature-grid">
+      <div className="feature-card">
+        <NoGasIcon />
+        <strong>Sin ETH</strong>
+        <span>Tu wallet nunca necesita gas nativo para empezar.</span>
+      </div>
+      <div className="feature-card">
+        <SignatureIcon />
+        <strong>Una firma</strong>
+        <span>Aprobación y depósito se envían juntos, en una sola operación.</span>
+      </div>
+      <div className="feature-card">
+        <YieldIcon />
+        <strong>Rinde en Aave V3</strong>
+        <span>El capital se despliega automáticamente para generar rendimiento.</span>
+      </div>
+    </div>
+  );
+}
+
+function PageHeader() {
+  return (
+    <header className="page-header">
+      <div className="page-header-brand">
+        <span className="brand-mark">◆</span>
+        <span>Gasless Yield Vault</span>
+      </div>
+      <span className="network-pill">{CHAIN_NAME} · Testnet</span>
+    </header>
+  );
+}
+
+function PageFooter() {
+  return (
+    <footer className="page-footer">
+      <p>
+        Construido para <strong>WDK Hackathon — Pista 2</strong> (Onboarding sin gas).
+        Corre sobre {CHAIN_NAME}, no usa fondos reales.
+      </p>
+      <a href={GITHUB_REPO_URL} target="_blank" rel="noopener noreferrer" className="footer-link">
+        <GithubIcon />
+        Ver código en GitHub
+      </a>
+    </footer>
   );
 }
 
@@ -120,139 +208,153 @@ export default function VaultView() {
   if (!address) {
     return (
       <div className="vault-page">
-        <div className="vault-card">
-          <div className="vault-eyebrow">Gasless Yield Vault</div>
-          <h1 className="vault-title">GasslessPilotVault</h1>
+        <PageHeader />
 
-          <div className="vault-panel vault-panel--intro">
-            <div style={{ marginBottom: 16 }}>
-              <GasBadge />
+        <div className="vault-page-content">
+          <div className="vault-card">
+            <div className="vault-eyebrow">Gasless Yield Vault</div>
+            <h1 className="vault-title">GasslessPilotVault</h1>
+
+            <div className="vault-panel vault-panel--intro">
+              <div style={{ marginBottom: 16 }}>
+                <GasBadge />
+              </div>
+              <p>
+                Conecta tu wallet para depositar en el vault y generar rendimiento
+                vía Aave V3 — sin necesitar ETH para el gas.
+              </p>
+              <button className="vault-connect" onClick={connect} disabled={loading}>
+                {loading ? "Conectando..." : "Conectar Wallet"}
+              </button>
+              {error && <p className="vault-error">{error}</p>}
             </div>
-            <p>
-              Conecta tu wallet para depositar en el vault y generar rendimiento
-              vía Aave V3 — sin necesitar ETH para el gas.
-            </p>
-            <button className="vault-connect" onClick={connect} disabled={loading}>
-              {loading ? "Conectando..." : "Conectar Wallet"}
-            </button>
-            {error && <p className="vault-error">{error}</p>}
+
+            <IntroFeatures />
           </div>
         </div>
+
+        <PageFooter />
       </div>
     );
   }
 
   return (
     <div className="vault-page">
-      <div className="vault-card">
-        <div className="vault-eyebrow">Gasless Yield Vault</div>
-        <h1 className="vault-title">GasslessPilotVault</h1>
+      <PageHeader />
 
-        <div className="vault-panel">
-          <div className="vault-address-row">
-            <p className="vault-address">
-              Cuenta <strong>{address.slice(0, 6)}...{address.slice(-4)}</strong>
+      <div className="vault-page-content">
+        <div className="vault-card">
+          <div className="vault-eyebrow">Gasless Yield Vault</div>
+          <h1 className="vault-title">GasslessPilotVault</h1>
+
+          <div className="vault-panel">
+            <div className="vault-address-row">
+              <p className="vault-address">
+                Cuenta <strong>{address.slice(0, 6)}...{address.slice(-4)}</strong>
+                <button
+                  type="button"
+                  className="copy-address-btn"
+                  onClick={handleCopyAddress}
+                  aria-label="Copiar dirección completa"
+                  title="Copiar dirección completa"
+                >
+                  {copied ? <CheckIcon /> : <CopyIcon />}
+                </button>
+              </p>
+              <GasBadge />
+            </div>
+
+            <div className="ledger">
+              <div className="ledger-row">
+                <span className="ledger-label">Balance USDC</span>
+                <span className="ledger-fill" />
+                <span className="ledger-value">{usdcBalance}</span>
+              </div>
+              <div className="ledger-row">
+                <span className="ledger-label">Saldo USD₮ (gas)</span>
+                <span className="ledger-fill" />
+                <span className="ledger-value ledger-value--accent">{usdtBalance}</span>
+              </div>
+              <div className="ledger-row">
+                <span className="ledger-label">Tus shares</span>
+                <span className="ledger-fill" />
+                <span className="ledger-value">{vaultShares}</span>
+              </div>
+              <div className="ledger-row">
+                <span className="ledger-label">Total del vault</span>
+                <span className="ledger-fill" />
+                <span className="ledger-value">{totalAssets}</span>
+              </div>
+            </div>
+
+            <div className="mode-tabs">
               <button
-                type="button"
-                className="copy-address-btn"
-                onClick={handleCopyAddress}
-                aria-label="Copiar dirección completa"
-                title="Copiar dirección completa"
+                className={`mode-tab ${mode === "deposit" ? "active" : ""}`}
+                onClick={() => setMode("deposit")}
               >
-                {copied ? <CheckIcon /> : <CopyIcon />}
+                Depositar
               </button>
-            </p>
-            <GasBadge />
-          </div>
-
-          <div className="ledger">
-            <div className="ledger-row">
-              <span className="ledger-label">Balance USDC</span>
-              <span className="ledger-fill" />
-              <span className="ledger-value">{usdcBalance}</span>
-            </div>
-            <div className="ledger-row">
-              <span className="ledger-label">Saldo USD₮ (gas)</span>
-              <span className="ledger-fill" />
-              <span className="ledger-value ledger-value--accent">{usdtBalance}</span>
-            </div>
-            <div className="ledger-row">
-              <span className="ledger-label">Tus shares</span>
-              <span className="ledger-fill" />
-              <span className="ledger-value">{vaultShares}</span>
-            </div>
-            <div className="ledger-row">
-              <span className="ledger-label">Total del vault</span>
-              <span className="ledger-fill" />
-              <span className="ledger-value">{totalAssets}</span>
-            </div>
-          </div>
-
-          <div className="mode-tabs">
-            <button
-              className={`mode-tab ${mode === "deposit" ? "active" : ""}`}
-              onClick={() => setMode("deposit")}
-            >
-              Depositar
-            </button>
-            <button
-              className={`mode-tab ${mode === "withdraw" ? "active" : ""}`}
-              onClick={() => setMode("withdraw")}
-            >
-              Retirar
-            </button>
-          </div>
-
-          <div className="amount-field">
-            <input
-              type="number"
-              placeholder="0.00"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              min="0"
-              step="0.01"
-            />
-            <span className="amount-suffix">USDC</span>
-          </div>
-
-          {amount && Number(amount) > 0 && (
-            <p className={`quote-line ${quoteLoading ? "quote-line--loading" : ""}`}>
-              {quoteLoading
-                ? "Calculando comisión en USD₮..."
-                : quote !== null
-                  ? `≈ ${quote} USD₮ de comisión · 0 ETH necesarios`
-                  : ""}
-            </p>
-          )}
-
-          <button
-            className="vault-submit"
-            onClick={handleSubmit}
-            disabled={loading || !amount}
-          >
-            {loading
-              ? "Procesando..."
-              : mode === "deposit"
-                ? "Depositar"
-                : "Retirar"}
-          </button>
-
-          {error && <p className="vault-error">{error}</p>}
-
-          {lastTxHash && (
-            <div className="vault-tx">
-              <span>Transacción confirmada</span>
-              <a
-                href={`${BLOCK_EXPLORER}/tx/${lastTxHash}`}
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                className={`mode-tab ${mode === "withdraw" ? "active" : ""}`}
+                onClick={() => setMode("withdraw")}
               >
-                {lastTxHash.slice(0, 8)}...{lastTxHash.slice(-6)}
-              </a>
+                Retirar
+              </button>
             </div>
-          )}
+
+            <div className="amount-field">
+              <input
+                type="number"
+                placeholder="0.00"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                min="0"
+                step="0.01"
+              />
+              <span className="amount-suffix">USDC</span>
+            </div>
+
+            {amount && Number(amount) > 0 && (
+              <p className={`quote-line ${quoteLoading ? "quote-line--loading" : ""}`}>
+                {quoteLoading
+                  ? "Calculando comisión en USD₮..."
+                  : quote !== null
+                    ? `≈ ${quote} USD₮ de comisión · 0 ETH necesarios`
+                    : ""}
+              </p>
+            )}
+
+            <button
+              className="vault-submit"
+              onClick={handleSubmit}
+              disabled={loading || !amount}
+            >
+              {loading
+                ? "Procesando..."
+                : mode === "deposit"
+                  ? "Depositar"
+                  : "Retirar"}
+            </button>
+
+            {error && <p className="vault-error">{error}</p>}
+
+            {lastTxHash && (
+              <div className="vault-tx">
+                <span>Transacción confirmada</span>
+                <a
+                  href={`${BLOCK_EXPLORER}/tx/${lastTxHash}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {lastTxHash.slice(0, 8)}...{lastTxHash.slice(-6)}
+                </a>
+              </div>
+            )}
+          </div>
         </div>
       </div>
+
+      <PageFooter />
     </div>
   );
 }
