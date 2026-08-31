@@ -14,7 +14,7 @@ function GasBadge() {
         <path d="M15 8h2a2 2 0 0 1 2 2v6a1.5 1.5 0 0 0 3 0V9.5L19 6" strokeLinecap="round" />
         <path d="M2 2l20 20" strokeLinecap="round" />
       </svg>
-      0 ETH requeridos
+      0 ETH required
     </span>
   );
 }
@@ -78,18 +78,18 @@ function IntroFeatures() {
     <div className="feature-grid">
       <div className="feature-card">
         <NoGasIcon />
-        <strong>Sin ETH</strong>
-        <span>Tu wallet nunca necesita gas nativo para empezar.</span>
+        <strong>No ETH</strong>
+        <span>Your wallet never needs native gas to get started.</span>
       </div>
       <div className="feature-card">
         <SignatureIcon />
-        <strong>Una firma</strong>
-        <span>Aprobación y depósito se envían juntos, en una sola operación.</span>
+        <strong>One signature</strong>
+        <span>Approval and deposit are sent together, in a single operation.</span>
       </div>
       <div className="feature-card">
         <YieldIcon />
-        <strong>Rinde en Aave V3</strong>
-        <span>El capital se despliega automáticamente para generar rendimiento.</span>
+        <strong>Earns yield on Aave V3</strong>
+        <span>Capital is automatically deployed to generate yield.</span>
       </div>
     </div>
   );
@@ -111,12 +111,12 @@ function PageFooter() {
   return (
     <footer className="page-footer">
       <p>
-        Construido para <strong>WDK Hackathon — Pista 2</strong> (Onboarding sin gas).
-        Corre sobre {CHAIN_NAME}, no usa fondos reales.
+        Built for the <strong>WDK Aleph Hackathon — Track 2</strong> (Gasless Onboarding).
+        Runs on {CHAIN_NAME}, uses no real funds.
       </p>
       <a href={GITHUB_REPO_URL} target="_blank" rel="noopener noreferrer" className="footer-link">
         <GithubIcon />
-        Ver código en GitHub
+        View code on GitHub
       </a>
     </footer>
   );
@@ -146,11 +146,11 @@ export default function VaultView() {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    // Si ya hay una wallet conectada previamente, podrias auto-reconectar aqui
+    // If a wallet was already connected previously, auto-reconnect could go here
   }, []);
 
-  // Cotiza el fee en USD₮ cada vez que cambia el monto o el modo,
-  // para mostrarlo ANTES de que el usuario confirme la transacción.
+  // Quote the USD₮ fee whenever the amount or mode changes,
+  // so it shows BEFORE the user confirms the transaction.
   useEffect(() => {
     if (!address || !amount || Number(amount) <= 0) {
       setQuote(null);
@@ -171,7 +171,7 @@ export default function VaultView() {
       } finally {
         if (!cancelled) setQuoteLoading(false);
       }
-    }, 400); // pequeño debounce mientras el usuario escribe
+    }, 400); // small debounce while the user types
 
     return () => {
       cancelled = true;
@@ -190,7 +190,7 @@ export default function VaultView() {
       setAmount("");
       setQuote(null);
     } catch (err) {
-      // el error ya queda reflejado en el estado del hook
+      // the error is already reflected in the hook's state
     }
   };
 
@@ -201,7 +201,7 @@ export default function VaultView() {
       setCopied(true);
       setTimeout(() => setCopied(false), 1800);
     } catch {
-      // clipboard puede fallar en contextos no-https o sin permiso; sin acción visual si falla
+      // clipboard can fail in non-https contexts or without permission; no visual action if it fails
     }
   };
 
@@ -220,11 +220,11 @@ export default function VaultView() {
                 <GasBadge />
               </div>
               <p>
-                Conecta tu wallet para depositar en el vault y generar rendimiento
-                vía Aave V3 — sin necesitar ETH para el gas.
+                Connect your wallet to deposit into the vault and earn yield
+                via Aave V3 — no ETH required for gas.
               </p>
               <button className="vault-connect" onClick={connect} disabled={loading}>
-                {loading ? "Conectando..." : "Conectar Wallet"}
+                {loading ? "Connecting..." : "Connect Wallet"}
               </button>
               {error && <p className="vault-error">{error}</p>}
             </div>
@@ -250,13 +250,13 @@ export default function VaultView() {
           <div className="vault-panel">
             <div className="vault-address-row">
               <p className="vault-address">
-                Cuenta <strong>{address.slice(0, 6)}...{address.slice(-4)}</strong>
+                Account <strong>{address.slice(0, 6)}...{address.slice(-4)}</strong>
                 <button
                   type="button"
                   className="copy-address-btn"
                   onClick={handleCopyAddress}
-                  aria-label="Copiar dirección completa"
-                  title="Copiar dirección completa"
+                  aria-label="Copy full address"
+                  title="Copy full address"
                 >
                   {copied ? <CheckIcon /> : <CopyIcon />}
                 </button>
@@ -266,22 +266,22 @@ export default function VaultView() {
 
             <div className="ledger">
               <div className="ledger-row">
-                <span className="ledger-label">Balance USDC</span>
+                <span className="ledger-label">USDC balance</span>
                 <span className="ledger-fill" />
                 <span className="ledger-value">{usdcBalance}</span>
               </div>
               <div className="ledger-row">
-                <span className="ledger-label">Saldo USD₮ (gas)</span>
+                <span className="ledger-label">USD₮ balance (gas)</span>
                 <span className="ledger-fill" />
                 <span className="ledger-value ledger-value--accent">{usdtBalance}</span>
               </div>
               <div className="ledger-row">
-                <span className="ledger-label">Tus shares</span>
+                <span className="ledger-label">Your shares</span>
                 <span className="ledger-fill" />
                 <span className="ledger-value">{vaultShares}</span>
               </div>
               <div className="ledger-row">
-                <span className="ledger-label">Total del vault</span>
+                <span className="ledger-label">Vault total</span>
                 <span className="ledger-fill" />
                 <span className="ledger-value">{totalAssets}</span>
               </div>
@@ -292,13 +292,13 @@ export default function VaultView() {
                 className={`mode-tab ${mode === "deposit" ? "active" : ""}`}
                 onClick={() => setMode("deposit")}
               >
-                Depositar
+                Deposit
               </button>
               <button
                 className={`mode-tab ${mode === "withdraw" ? "active" : ""}`}
                 onClick={() => setMode("withdraw")}
               >
-                Retirar
+                Withdraw
               </button>
             </div>
 
@@ -317,9 +317,9 @@ export default function VaultView() {
             {amount && Number(amount) > 0 && (
               <p className={`quote-line ${quoteLoading ? "quote-line--loading" : ""}`}>
                 {quoteLoading
-                  ? "Calculando comisión en USD₮..."
+                  ? "Calculating USD₮ fee..."
                   : quote !== null
-                    ? `≈ ${quote} USD₮ de comisión · 0 ETH necesarios`
+                    ? `≈ ${quote} USD₮ fee · 0 ETH needed`
                     : ""}
               </p>
             )}
@@ -330,17 +330,17 @@ export default function VaultView() {
               disabled={loading || !amount}
             >
               {loading
-                ? "Procesando..."
+                ? "Processing..."
                 : mode === "deposit"
-                  ? "Depositar"
-                  : "Retirar"}
+                  ? "Deposit"
+                  : "Withdraw"}
             </button>
 
             {error && <p className="vault-error">{error}</p>}
 
             {lastTxHash && (
               <div className="vault-tx">
-                <span>Transacción confirmada</span>
+                <span>Transaction confirmed</span>
                 <a
                   href={`${BLOCK_EXPLORER}/tx/${lastTxHash}`}
                   target="_blank"
